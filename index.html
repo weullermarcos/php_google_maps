@@ -80,12 +80,22 @@ Data: 29/10/2020
                         var marker = new google.maps.Marker({
                             map: map,
                             position: point,
-                            label: icon.label
+                            label: icon.label,
+                            url: 'https://www.google.com'
                         });
 
                         marker.addListener('click', function() {
+                              window.location.href = this.url;
+                        });
+                        marker.addListener('mouseover', function() {
+//                            infowindow.open(map, this);
                             infoWindow.setContent(infowincontent);
                             infoWindow.open(map, marker);
+                        });
+
+                        // assuming you also want to hide the infowindow when user mouses-out
+                        marker.addListener('mouseout', function() {
+                            infowindow.close();
                         });
                     });
                     
