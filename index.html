@@ -44,6 +44,7 @@ Data: 29/10/2020
                 
                 var map = new google.maps.Map(document.getElementById('map'), {
                     
+                    // Configura centro do mapa e zoom inicial
                     center: new google.maps.LatLng(-5.111395, -36.634351),
                     zoom: 16
                 });
@@ -56,8 +57,10 @@ Data: 29/10/2020
 
                     var xml = data.responseXML;
                     var markers = xml.documentElement.getElementsByTagName('marker');
+                    
                     Array.prototype.forEach.call(markers, function(markerElem) {
                         
+                        // Lê elementos do XML
                         var id = markerElem.getAttribute('id');
                         var name = markerElem.getAttribute('name');
                         var address = markerElem.getAttribute('address');
@@ -67,6 +70,7 @@ Data: 29/10/2020
                             parseFloat(markerElem.getAttribute('lng')));
 
                         var infowincontent = document.createElement('div');
+                        
                         var strong = document.createElement('strong');
                         strong.textContent = name
                         infowincontent.appendChild(strong);
@@ -75,6 +79,8 @@ Data: 29/10/2020
                         var text = document.createElement('text');
                         text.textContent = address
                         infowincontent.appendChild(text);
+                        
+                        // Seleciona label do marcados
                         var icon = customLabel[type] || {};
 
                         var marker = new google.maps.Marker({
@@ -84,16 +90,19 @@ Data: 29/10/2020
                             url: 'https://www.google.com'
                         });
 
+                        // Evento: click
                         marker.addListener('click', function() {
                               window.location.href = this.url;
                         });
+                        
+                        // Evento: mouseover
                         marker.addListener('mouseover', function() {
 //                            infowindow.open(map, this);
                             infoWindow.setContent(infowincontent);
                             infoWindow.open(map, marker);
                         });
 
-                        // assuming you also want to hide the infowindow when user mouses-out
+                        // Evento: mouseout
                         marker.addListener('mouseout', function() {
                             infowindow.close();
                         });
